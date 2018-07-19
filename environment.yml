@@ -14,3 +14,6 @@ dependencies:
  - keras
  - pillow
  - cython
+ - tensorflow-gpu  # gce cloud tpu
+ - oauth2client  # gce cloud tpu
+ - google-api-python-client  # gce cloud tpu
