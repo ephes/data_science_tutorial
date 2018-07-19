@@ -11,9 +11,10 @@ dependencies:
  - jupyter
  - jupyter_contrib_nbextensions
  - pandas-datareader
- - keras
  - pillow
  - cython
- - tensorflow-gpu  # gce cloud tpu
+ - cudnn
  - oauth2client  # gce cloud tpu
  - google-api-python-client  # gce cloud tpu
+ - pip:
+    - tensorflow-gpu  # installing with conda does not work :(
