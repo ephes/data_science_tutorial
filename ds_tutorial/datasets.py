@@ -1,4 +1,5 @@
 from io import StringIO
+from collections import Counter
 import xml.etree.ElementTree as _et
 
 
@@ -130,3 +131,55 @@ class ReutersCorpus:
             if len(doc["cats"]) == 1:
                 filtered_docs.append(doc)
         return filtered_docs
+
+    @property
+    def number_of_samples(self):
+        return len(self.docs)
+
+    @property
+    def number_of_classes(self):
+        return len([name for name, count in self.topics.items() if count > 1])
+
+    @property
+    def texts(self):
+        return [d["text"] for d in self.docs]
+
+    @property
+    def topic_counts(self):
+        counts = Counter()
+        for doc in self.docs:
+            for topic in doc["cats"]:
+                counts[topic] += 1
+        return counts
+
+    def top_n(self, n=10):
+        topic_lookup = {v: k for k, v in self.topics.items()}
+        top_topics = sorted(
+            [(v, k) for k, v in self.topic_counts.items()], reverse=True
+        )[:n]
+        top_n_topics = [
+            (topic_lookup[topic_id], topic_id) for (count, topic_id) in top_topics[:10]
+        ]
+        top_n_ids = [topic_id for (name, topic_id) in top_n_topics]
+        top_n_names = [name for name, topic_id in top_n_topics]
+        return top_n_ids, top_n_names
+
+    def get_labels(self, docs, top_n):
+        labels = []
+        for doc in docs:
+            # default label is the first one
+            label = doc["cats"][0]
+            for cat in doc["cats"]:
+                if cat in top_n:
+                    label = cat
+            labels.append(label)
+        return labels
+
+    def split_modapte(self):
+        train, test = [], []
+        for doc in self.docs:
+            if doc["modapte"] == "train":
+                train.append(doc)
+            elif doc["modapte"] == "test":
+                test.append(doc)
+        return train, test
