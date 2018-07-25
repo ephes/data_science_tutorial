@@ -1,6 +1,4 @@
 name: ds_tutorial
-channels:
- - conda-forge
 dependencies:
  - python=3.6
  - numpy
@@ -9,12 +7,13 @@ dependencies:
  - scikit-learn
  - seaborn
  - jupyter
- - jupyter_contrib_nbextensions
  - pandas-datareader
  - pillow
  - cython
  - cudnn
- - oauth2client  # gce cloud tpu
- - google-api-python-client  # gce cloud tpu
+ - opencv
+ - xgboost
  - pip:
-    - tensorflow-gpu  # installing with conda does not work :(
+    - tensorflow
+    - keras
+    - tqdm
