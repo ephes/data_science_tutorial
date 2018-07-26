@@ -13,6 +13,8 @@ dependencies:
  - cudnn
  - opencv
  - xgboost
+ - lxml
+ - beautifulsoup4
  - pip:
     - tensorflow
     - keras
