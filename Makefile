@@ -25,7 +25,7 @@ lint:
 
 ## Django jupyter notebook server
 notebook:
-	jupyter notebook
+	jupyter notebook --notebook-dir notebooks
 
 #################################################################################
 # Self Documenting Commands                                                                #
