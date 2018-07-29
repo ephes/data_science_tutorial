@@ -12,10 +12,11 @@ dependencies:
  - cython
  - cudnn
  - opencv
- - xgboost
  - lxml
  - beautifulsoup4
  - pip:
     - tensorflow
     - keras
     - tqdm
+    - xgboost
+    - lightgbm
