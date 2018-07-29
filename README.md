@@ -40,6 +40,5 @@ pip install -e .
 # Start notebook server
 
 ```shell
-cd notebooks
-jupyter notebook
+make notebook
 ```
