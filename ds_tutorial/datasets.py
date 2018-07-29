@@ -1,3 +1,5 @@
+import pandas as pd
+
 from io import StringIO
 from collections import Counter
 import xml.etree.ElementTree as _et
@@ -183,3 +185,34 @@ class ReutersCorpus:
             elif doc["modapte"] == "test":
                 test.append(doc)
         return train, test
+
+
+def build_reuters_dataframe(docs, train_labels, test_labels, top_ten_ids):
+    # remove gaps
+    labels = train_labels + test_labels
+    label_lookup = {}
+    num = 0
+    for label in sorted(labels):
+        if label not in label_lookup:
+            label_lookup[label] = num
+            num += 1
+    labels = [label_lookup[l] for l in labels]
+    train_labels = [label_lookup[l] for l in train_labels]
+    test_labels = [label_lookup[l] for l in test_labels]
+    top_ten_ids = [label_lookup[tid] for tid in top_ten_ids]
+
+    # build dataframe
+    df = pd.DataFrame()
+    df["modapte"] = [d["modapte"] for d in docs]
+    df["label"] = train_labels + test_labels
+    df["date"] = [d["date"] for d in docs]
+    df["title"] = [d["title"] for d in docs]
+    df["dateline"] = [d["dateline"] for d in docs]
+    df["body"] = [d["body"] for d in docs]
+    df["newid"] = [d["attrs"]["NEWID"] for d in docs]
+    df["date"] = pd.to_datetime(
+        df.date.str.split(".").apply(lambda x: x[0].lstrip()),
+        format="%d-%b-%Y %H:%M:%S",
+    )
+    df["wd_name"] = df.date.dt.weekday_name
+    return df, top_ten_ids, train_labels, test_labels
