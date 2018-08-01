@@ -1,0 +1,35 @@
+# Links
+
+## Einführungsvortrag
+
+Spiel, bei dem das Netz, das es spielt mit eingeblendet wird: https://github.com/fartenko/pico-nn
+Google-IO Vortrag, Duplex Demo: https://www.youtube.com/watch?v=bd1mEm2Fy08
+
+Interview mit John Searl, der Teil über den Bernoulli-Effekt beginnt ab Minute 35: https://www.srf.ch/sendungen/sternstunde-philosophie/john-searle-der-sinn-des-bewusstseins
+Artikel zum Bernoulli-Effekt: https://www.zeit.de/2001/21/200121_flugzeug.xml
+
+Haben Menschen generelle Intelligenz? Der Wason-Selection Task: https://en.wikipedia.org/wiki/Wason_selection_task
+
+Blogartikel von Wes McKinney über Pandas/Arrow: http://wesmckinney.com/blog/apache-arrow-pandas-internals/
+
+## Erstes praktisches Beispiel - Hunde vs Katzenbilder
+
+Das Beispiel stammt aus folgendem Buch "Deep Learning with Python" von François Chollet: https://www.manning.com/books/deep-learning-with-python
+Hier der komplette Code in dem Buch als Jupyter-Notebooks: https://github.com/fchollet/deep-learning-with-python-notebooks
+
+Wie bekommt man einfach schnelle GPU-Unterstützung auf der google compute engine: https://blog.kovalevskyi.com/deep-learning-images-for-google-cloud-engine-the-definitive-guide-bc74f5fb02bc
+Direkter Link zu den Images: https://console.cloud.google.com/marketplace/details/click-to-deploy-images/deeplearning?project=data-science-tutorial-210316&folder&organizationId
+
+## Zweites praktisches Beispiel - Textklassifikation Reuters21578
+
+Ausführlichere Feature Engeneering Slides: https://www.slideshare.net/HJvanVeen/feature-engineering-72376750
+
+Google Machine Learning Guide für Textklassifikation: https://developers.google.com/machine-learning/guides/text-classification/
+Google Machine Learning Guide github repo mit komplettem Code: https://github.com/google/eng-edu/tree/master/ml/guides/text_classification
+
+Text Classification with support vector machines: http://www.cs.cornell.edu/people/tj/publications/joachims_98a.pdf
+
+## Schicke Visualisierungen, die auch von Interesse sein könnten
+
+Visuelle Einführung in Machine Learning anhand von Decision Trees: http://www.r2d3.us/visual-intro-to-machine-learning-part-1/
+Bias vs Variance Tradeoff: http://www.r2d3.us/visual-intro-to-machine-learning-part-2/
