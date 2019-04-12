@@ -227,7 +227,7 @@ class ReutersCorpus:
         return df, top_ten_ids, train_labels, test_labels
 
 
-def build_reuters_dataframe(docs, train_labels, test_labels, top_ten_ids):
+def build_reuters_dataframe(docs, topics, train_labels, test_labels, top_ten_ids):
     # remove gaps
     labels = train_labels + test_labels
     label_lookup = {}
@@ -237,7 +237,7 @@ def build_reuters_dataframe(docs, train_labels, test_labels, top_ten_ids):
             label_lookup[label] = num
             num += 1
 
-    topic_lookup = {v: k for k, v in self.topics.items()}
+    topic_lookup = {v: k for k, v in topics.items()}
     orig_labels = [topic_lookup[l] for l in labels]
 
     labels = [label_lookup[l] for l in labels]
