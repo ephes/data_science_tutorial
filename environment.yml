@@ -14,9 +14,9 @@ dependencies:
  - opencv
  - lxml
  - beautifulsoup4
+ - lightgbm
  - pip:
     - tensorflow
     - keras
     - tqdm
     - xgboost
-    - lightgbm
