@@ -1,0 +1,17 @@
+import shutil
+
+from pathlib import Path
+
+def copy_files_from_google_drive():
+  from google.colab import drive
+  gdrive_root = Path("/content/gdrive")
+  drive.mount(str(gdrive_root), force_remount=True)
+  gdrive = gdrive_root / "My Drive"
+  gdrive_sample_dir = gdrive / "data" / "tmp" / "cats_vs_dogs_sample"
+  shutil.copytree(gdrive_sample_dir, data_root)  
+    
+try:
+  import google.colab
+  COLAB = True
+except:
+  COLAB = False
