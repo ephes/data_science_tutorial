@@ -237,7 +237,7 @@ class ReutersCorpus:
 
         orig_labels = []
         for cats in labels:
-            topics = [self.cat_to_topic[c] for c in cats]
+            topics = [self.renumbered_cat_to_topic[c] for c in cats]
             orig_labels.append(topics)
 
         # build dataframe
