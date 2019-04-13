@@ -58,23 +58,40 @@ class ReutersParser:
 
 
 class ReutersCorpus:
-    def __init__(self, raw_docs, multiclass=False):
+    def __init__(self, raw_docs, multiclass=False, filter_empty_cats=True):
         self.topics = {}
+        self.cat_to_topic = {}
         self.target_names = []
 
         self.docs = list(self.get_docs(raw_docs))
         if multiclass:
             self.docs = self.filter_multi_label(self.docs)
-        self.docs = self.filter_empty_cats(self.docs)
+
+        # before filtering empty cats it's 9603 train and 3299 test documents
+        # after filtering there are 7770 train and 3019 test documents left
+        if filter_empty_cats:
+            self.docs = self.filter_empty_cats(self.docs)
 
         # labels have to be without gaps
         self._renumber_topics()
 
     def _renumber_topics(self):
-        self.topics = {}
-        self.target_names = []
+        self.renumbered_cat_to_topic = {}
+        self.renumbered_topics = {}
+        self.renumbered_lookup = {}
+        num = 0
         for doc in self.docs:
-            self._add_topics(doc)
+            new_cats = []
+            for cat in doc["cats"]:
+                if cat not in self.renumbered_lookup:
+                    topic = self.cat_to_topic[cat]
+                    self.renumbered_cat_to_topic[num] = topic
+                    self.renumbered_topics[topic] = num
+                    self.renumbered_lookup[cat] = num
+                    num += 1
+                new_cat = self.renumbered_lookup[cat]
+                new_cats.append(new_cat)
+            doc["cats"] = new_cats
 
     def _add_text(self, doc):
         # doc["text"] = " ".join([doc.get(tag) or "" for tag in
@@ -98,6 +115,7 @@ class ReutersCorpus:
                 self.target_names.append(topic)
                 topic_id = len(self.target_names)
                 self.topics[topic] = topic_id
+                self.cat_to_topic[topic_id] = topic
             topic_id = self.topics[topic]
             doc["cats"].append(topic_id)
 
@@ -120,6 +138,7 @@ class ReutersCorpus:
                 for cat in doc["cats"]:
                     test.add(cat)
         valid_cats = train.intersection(test)
+        self.valid_cats = valid_cats
         new_docs = []
         for doc in docs:
             doc["cats"] = [c for c in doc["cats"] if c in valid_cats]
@@ -155,7 +174,7 @@ class ReutersCorpus:
         return counts
 
     def top_n(self, n=10):
-        topic_lookup = {v: k for k, v in self.topics.items()}
+        topic_lookup = {v: k for k, v in self.renumbered_topics.items()}
         top_topics = sorted(
             [(v, k) for k, v in self.topic_counts.items()], reverse=True
         )[:n]
@@ -166,7 +185,7 @@ class ReutersCorpus:
         top_n_names = [name for name, topic_id in top_n_topics]
         return top_n_ids, top_n_names
 
-    def get_labels(self, docs, top_n):
+    def get_single_label(self, docs, top_n):
         labels = []
         for doc in docs:
             # default label is the first one
@@ -175,6 +194,12 @@ class ReutersCorpus:
                 if cat in top_n:
                     label = cat
             labels.append(label)
+        return labels
+
+    def get_labels(self, docs):
+        labels = []
+        for doc in docs:
+            labels.append(doc["cats"])
         return labels
 
     def split_modapte(self):
@@ -190,24 +215,30 @@ class ReutersCorpus:
         top_ten_ids, top_ten_names = self.top_n(n=n)
         train_docs, test_docs = self.split_modapte()
         docs = train_docs + test_docs
-        train_labels = self.get_labels(train_docs, set(top_ten_ids))
-        test_labels = self.get_labels(test_docs, set(top_ten_ids))
-
+        train_labels = self.get_labels(train_docs)
+        test_labels = self.get_labels(test_docs)
         labels = train_labels + test_labels
-        label_lookup = {}
-        num = 0
-        for label in sorted(labels):
-            if label not in label_lookup:
-                label_lookup[label] = num
-                num += 1
 
-        topic_lookup = {v: k for k, v in self.topics.items()}
-        orig_labels = [topic_lookup[l] for l in labels]
+#        labels = train_labels + test_labels
+#        label_lookup = {}
+#        num = 0
+#        for label in sorted(labels):
+#            if label not in label_lookup:
+#                label_lookup[label] = num
+#                num += 1
+#
+#        topic_lookup = {v: k for k, v in self.topics.items()}
+#        orig_labels = [topic_lookup[l] for l in labels]
+#
+#        labels = [label_lookup[l] for l in labels]
+#        train_labels = [label_lookup[l] for l in train_labels]
+#        test_labels = [label_lookup[l] for l in test_labels]
+#        top_ten_ids = [label_lookup[tid] for tid in top_ten_ids]
 
-        labels = [label_lookup[l] for l in labels]
-        train_labels = [label_lookup[l] for l in train_labels]
-        test_labels = [label_lookup[l] for l in test_labels]
-        top_ten_ids = [label_lookup[tid] for tid in top_ten_ids]
+        orig_labels = []
+        for cats in labels:
+            topics = [self.cat_to_topic[c] for c in cats]
+            orig_labels.append(topics)
 
         # build dataframe
         df = pd.DataFrame()
