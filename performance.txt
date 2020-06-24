@@ -1,0 +1,83 @@
+k80, python 3.5 default dlimage cuda 9.2:
+------------------------------------------------------
+
+Einfach:
+CPU times: user 5min 22s, sys: 22.2 s, total: 5min 44s
+Wall time: 3min 58s
+
+
+Augmented:
+CPU times: user 57min 50s, sys: 1min 53s, total: 59min 44s
+Wall time: 47min 47s
+
+2 k80, python 3.5 default dlimage cuda 9.2:
+------------------------------------------------------
+Einfach:
+CPU times: user 5min 21s, sys: 24.5 s, total: 5min 46s
+Wall time: 3min 42s
+
+Multi GPU (2) Einfach:
+CPU times: user 6min, sys: 23.2 s, total: 6min 23s
+Wall time: 3min 52s
+
+2 k80, python 3.6 conda ohne condaforge cuda 9.0 conda cudnn:
+-------------------------------------------------------------
+
+Einfach:
+CPU times: user 7min 9s, sys: 25 s, total: 7min 34s
+Wall time: 5min 8s
+
+Einfach mit multi_gpu:
+CPU times: user 7min 40s, sys: 21.1 s, total: 8min 1s
+Wall time: 5min 10s
+
+p100, python 3.5 default dlimage cuda 9.2:
+------------------------------------------
+Einfach:
+CPU times: user 4min 4s, sys: 10.9 s, total: 4min 15s
+Wall time: 3min 11s
+
+v100, python 3.5 default dlimage cuda 9.2:
+------------------------------------------
+
+Einfach:
+CPU times: user 3min 33s, sys: 7.89 s, total: 3min 41s
+Wall time: 3min 3s
+
+Augmented:
+CPU times: user 41min 20s, sys: 30.5 s, total: 41min 50s
+Wall time: 34min 30s
+
+
+p100, conda install cudnn pip tensorflow-gpu dlimage (kein conda-forge):
+------------------------------------------------------------------------
+Einfach:
+CPU times: user 5min 44s, sys: 21.4 s, total: 6min 6s
+Wall time: 4min 42s
+
+k80, conda install cudnn pip tensorflow-gpu dlimage:
+------------------------------------------------------
+
+CPU times: user 11min 53s, sys: 33.8 s, total: 12min 27s
+Wall time: 9min 58s
+
+k80, conda install cudnn pip tensorflow-gpu, cuda 9.0 ubuntu:
+------------------------------------------------------------
+
+Einfach:
+CPU times: user 9min 9s, sys: 26.3 s, total: 9min 35s
+Wall time: 9min 54s
+
+cuda9.2
+CPU times: user 9min 8s, sys: 27.4 s, total: 9min 36s
+Wall time: 10min
+
+Augmented:
+
+
+sudo apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1710/x86_64/7fa2af80.pub
+echo "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1710/x86_64 /" | sudo tee /etc/apt/sources.list.d/cuda.list
+sudo apt update
+sudo apt -o Dpkg::Options::="--force-overwrite" install cuda-9-2 cuda-drivers
+sudo reboot
+
