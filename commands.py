@@ -103,6 +103,5 @@ def docs():
 @typer_cli
 def notebook():
     env = os.environ.copy()
-    env["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
-    command = "python ../manage.py shell_plus --settings config.settings.local --notebook"
+    command = "jupyter notebook"
     run_command(command, cwd="notebooks", debug=True, env=env)
