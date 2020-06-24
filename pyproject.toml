@@ -17,7 +17,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "3.8.2"
+python = "3.8.3"
 scikit-learn = "^0.23.1"
 jupyter = "^1.0.0"
 tensorflow = "^2.2.0"
@@ -26,6 +26,8 @@ xgboost = "^1.1.1"
 pandas = "^1.0.4"
 dask = {extras = ["complete"], version = "^2.18.1"}
 distributed = "^2.18.0"
+typer = "^0.2.1"
+s3fs = "^0.4.2"
 
 [tool.poetry.scripts]
 test = "commands:pytest"
