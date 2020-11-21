@@ -17,17 +17,19 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = "3.8.3"
-scikit-learn = "^0.23.1"
-jupyter = "^1.0.0"
-tensorflow = "^2.2.0"
-tqdm = "^4.46.1"
-xgboost = "^1.1.1"
-pandas = "^1.0.4"
-dask = {extras = ["complete"], version = "^2.18.1"}
-distributed = "^2.18.0"
-typer = "^0.2.1"
-s3fs = "^0.4.2"
+python = "^3.8"
+scikit-learn = "*"
+jupyter = "^1"
+tensorflow = "^2"
+tqdm = "^4"
+xgboost = "^1"
+pandas = "^1"
+dask = {extras = ["complete"], version = "^2"}
+distributed = "^2"
+typer = "*"
+s3fs = "*"
+matplotlib = "^3.3.3"
+Keras = "^2.4.3"
 
 [tool.poetry.scripts]
 test = "commands:pytest"
@@ -40,6 +42,6 @@ clean-pyc = "commands:clean_pyc"
 clean = "commands:clean"
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
