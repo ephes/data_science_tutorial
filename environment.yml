@@ -1,6 +1,5 @@
 name: ds_tutorial
 dependencies:
- - python=3.7
  - numpy
  - pandas
  - matplotlib
@@ -15,10 +14,9 @@ dependencies:
  - lxml
  - beautifulsoup4
  - pip
- - pip:
-    - tensorflow
-    - keras
-    - tqdm
-    - xgboost
-    - lightgbm
-    - spacy
+ - tensorflow
+ - keras
+ - tqdm
+ - xgboost
+ - lightgbm
+ - spacy
