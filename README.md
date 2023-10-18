@@ -56,3 +56,9 @@ FIXME:
 ```shell
 make notebook
 ```
+
+# Remove the environment
+
+```shell
+conda remove --name ds_tutorial --all
+```
