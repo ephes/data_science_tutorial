@@ -50,11 +50,8 @@ pip install -e .
 
 # Start notebook server
 
-FIXME:
-* no makefile
-
 ```shell
-make notebook
+jupyter lab --notebook-dir notebooks
 ```
 
 # Remove the environment
