@@ -1,22 +1,22 @@
 name: ds_tutorial
 dependencies:
- - numpy
  - pandas
- - matplotlib
- - scikit-learn
- - seaborn
- - jupyter
- - pandas-datareader
- - pillow
- - cython
- # - cudnn
- - opencv
- - lxml
- - beautifulsoup4
- - pip
- - tensorflow
- - keras
- - tqdm
- - xgboost
- - lightgbm
- - spacy
+#  - numpy
+#  - matplotlib
+#  - scikit-learn
+#  - seaborn
+#  - jupyter
+#  - pandas-datareader
+#  - pillow
+#  - cython
+#  # - cudnn
+#  - opencv
+#  - lxml
+#  - beautifulsoup4
+#  - pip
+#  - tensorflow
+#  - keras
+#  - tqdm
+#  - xgboost
+#  - lightgbm
+#  - spacy
