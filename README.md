@@ -54,6 +54,12 @@ pip install -e .
 jupyter lab --notebook-dir notebooks
 ```
 
+# Update environment after adding new packages
+
+```shell
+conda env update -f environment.yml --prune
+```
+
 # Remove the environment
 
 ```shell
