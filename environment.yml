@@ -2,8 +2,10 @@ name: ds_tutorial
 dependencies:
  - jupyterlab
  - pandas
+ - matplotlib
+ - html5lib
+
 #  - numpy
-#  - matplotlib
 #  - scikit-learn
 #  - seaborn
 #  - jupyter
