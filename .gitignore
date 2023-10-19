@@ -102,3 +102,10 @@ ENV/
 
 # vim
 *.swp
+
+# pycharm
+.idea/
+
+# nbdev
+_proc/
+_docs/
