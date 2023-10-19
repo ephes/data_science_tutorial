@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="ds_tutorial",
+    name="ds_tut",
     version="0.0.1",
     author="Jochen Wersdörfer",
     author_email="jochen-ds_tutorial@wersdoerfer.de",
