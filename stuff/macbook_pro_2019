@@ -1,0 +1,26 @@
+# Cats vs dogs from scratch.
+
+## Unoptimiert auf 8 CPUs:
+
+Epoch dauert so 27s 265ms/step
+CPU times: user 1h 42min 35s, sys: 10min 48s, total: 1h 53min 24s
+Wall time: 13min 37s
+
+## plaidml llvm cpu
+
+Unfassbar langsam..
+
+## plaidml metal radeon gpu
+
+INFO:plaidml:Opening device "metal_amd_radeon_pro_5500m.0"
+
+Epoch dauert so 13s 130ms/step
+CPU times: user 3min 57s, sys: 55.3 s, total: 4min 52s
+Wall time: 6min 33s
+
+## tensorflow mac_os 2.4rc0
+
+Epoch dauert so 6s 64ms/step
+real	3m14.018s
+user	3m24.719s
+sys	0m35.804s
