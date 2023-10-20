@@ -16,5 +16,8 @@ nbdev_preview  # installs quarto the first time called
 ## jupyter
 python -m pip install jupyterlab
 
+## pre-commit hooks
+nbdev_install_hooks
+
 # Run the Development-Environment
 honcho start  # runs quarto + jupyterlab
