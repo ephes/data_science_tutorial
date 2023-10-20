@@ -2,7 +2,7 @@ project:
   output-dir: _docs
 
 website:
-  title: "ds_tut"
+  title: "Data Science Tutorial"
   site-url: "https://ephes.github.io/data_science_tutorial"
   description: "Python data science and machine learning tutorial"
   repo-branch: main
