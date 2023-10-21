@@ -109,6 +109,7 @@ ENV/
 # nbdev
 _proc/
 _docs/
+.last_checked
 
 # mac
 .DS_STORE
