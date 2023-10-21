@@ -113,3 +113,6 @@ _docs/
 
 # mac
 .DS_STORE
+
+# data
+data/

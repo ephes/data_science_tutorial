@@ -8,7 +8,7 @@ documentation.
 ## Install
 
 ``` sh
-pip install data_science_tutorial
+pip install ds_tut
 ```
 
 ## How to use
