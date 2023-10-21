@@ -18,6 +18,7 @@ python -m pip install jupyterlab
 
 ## pre-commit hooks
 nbdev_install_hooks
+pre-commit install
 
 # Run the Development-Environment
 honcho start  # runs quarto + jupyterlab
