@@ -1,5 +1,0 @@
-website:
-  sidebar:
-    contents:
-      - index.ipynb
-      - 00_io.ipynb
