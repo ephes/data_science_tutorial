@@ -13,10 +13,12 @@ pip install ds_tut
 
 ## How to use
 
-Fill me in please! Don’t forget code examples:
+Start the jupyter lab server:
 
-``` python
-1+1
+```` python
+```sh
+jupyter lab
 ```
+````
 
-    2
+    SyntaxError: invalid syntax (731603936.py, line 1)
