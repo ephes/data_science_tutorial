@@ -3,3 +3,4 @@ website:
     contents:
       - index.ipynb
       - numpy.ipynb
+      - text_classification.ipynb
