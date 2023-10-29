@@ -5,7 +5,11 @@
 # Text Classification
 
 Maybe let’s start by doing some [text
-classification](text_classification.ipynb).
+classification](text_classification.ipynb) ([open in google
+colab](https://colab.research.google.com/github/ephes/data_science_tutorial/blob/main/text_classification.ipynb)).
+
+Is it possible to link directly to [word frequency
+distribution](text_classification.ipynb#Word-frequency-distribution)?
 
 ## Numpy
 
