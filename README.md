@@ -11,11 +11,20 @@ colab](https://colab.research.google.com/github/ephes/data_science_tutorial/blob
 Is it possible to link directly to [word frequency
 distribution](text_classification.ipynb#Word-frequency-distribution)?
 
+# Foundations
+
+🏗 I added the notebooks below already because they should work, but they
+are also still very much work in progress. 👷
+
 ## Numpy
 
 Numpy is the basis of a lot of stuff in related to data science in
-Python. Here’s an [overview covering the base features](numpy.ipynb).
+Python. Here’s an [overview covering the base features](numpy.ipynb)
+([open in google
+colab](https://colab.research.google.com/github/ephes/data_science_tutorial/blob/main/numpy.ipynb)).
 
 ## Pandas
 
-Pandas is very useful
+Pandas is very useful - [basic feature overview](pandas.ipynb) ([open in
+google
+colab](https://colab.research.google.com/github/ephes/data_science_tutorial/blob/main/pandas.ipynb)).
