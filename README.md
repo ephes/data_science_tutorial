@@ -5,6 +5,14 @@
 ![Cover image for a Data Science / Machine Learning Course or
 Meetup](images/tutorial_cover.png)
 
+This tutorial covers topics that are relevant or interesting for me for
+some kind of reason 😄. Have fun!
+
+> 🚧 At the moment this tutorial is **under construction** 🚧. It will
+> stay in that state for quite some time, but I will add new tutorials
+> one by one. So it might be a good idea to check periodically for
+> updates.
+
 # Text Classification
 
 Maybe let’s start by doing some [text
