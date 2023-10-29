@@ -10,17 +10,38 @@ some kind of reason 😄. Have fun!
 
 > 🚧 At the moment this tutorial is **under construction** 🚧. It will
 > stay in that state for quite some time, but I will add new tutorials
-> one by one. So it might be a good idea to check periodically for
+> one by one. So it might be a good idea to check back periodically for
 > updates.
+
+### Installation
+
+You can run the chapter notebooks on your local machine or on [Google
+Colab](https://research.google.com/colaboratory/).
+
+On your local machine you need to clone the repo, create a virtualenv
+and start your preferred notebook server.
+
+``` sh
+$ git clone git@github.com:ephes/data_science_tutorial.git
+$ python -m venv venv
+$ venv/bin/python -m pip install jupterlab
+$ venv/bin/jupyter lab
+```
+
+Usually, the dependencies needed for a notebook should be installed from
+within the notebook itself using the `%pip` cell magic. Packages that
+you install using `%pip` will be installed into the virtualenv that you
+run the notebook server from. It should make no difference whether you
+use classic or conda virtual environments.
 
 # Text Classification
 
-Maybe let’s start by doing some [text
-classification](text_classification.ipynb) ([open in google
-colab](https://colab.research.google.com/github/ephes/data_science_tutorial/blob/main/text_classification.ipynb)).
+**Chapter 01:** Getting started with Text Classification
+[docs](https://ephes.github.io/data_science_tutorial/#text-classification)
 
-Is it possible to link directly to [word frequency
-distribution](text_classification.ipynb#Word-frequency-distribution)?
+- **Local:** [Notebook](01_text_classification.ipynb)
+- **Google Colab:** [Open in
+  Colab](https://colab.research.google.com/github/ephes/data_science_tutorial/blob/main/01_text_classification.ipynb)
 
 # Foundations
 
@@ -30,12 +51,22 @@ are also still very much work in progress. 👷
 ## Numpy
 
 Numpy is the basis of a lot of stuff in related to data science in
-Python. Here’s an [overview covering the base features](numpy.ipynb)
-([open in google
-colab](https://colab.research.google.com/github/ephes/data_science_tutorial/blob/main/numpy.ipynb)).
+Python.
+
+**Chapter 08:** Numpy Overview Covering the Basic Features
+[docs](https://ephes.github.io/data_science_tutorial/#numpy)
+
+- **Local:** [Notebook](08_numpy.ipynb)
+- **Google Colab:** [Open in
+  Colab](https://colab.research.google.com/github/ephes/data_science_tutorial/blob/main/08_numpy.ipynb)
 
 ## Pandas
 
-Pandas is very useful - [basic feature overview](pandas.ipynb) ([open in
-google
-colab](https://colab.research.google.com/github/ephes/data_science_tutorial/blob/main/pandas.ipynb)).
+Pandas is very useful for all kinds of pre-processing and data cleaning.
+
+**Chapter 09:** Using Pandas
+[docs](https://ephes.github.io/data_science_tutorial/#pandas)
+
+- **Local:** [Notebook](09_pandas.ipynb)
+- **Google Colab:** [Open in
+  Colab](https://colab.research.google.com/github/ephes/data_science_tutorial/blob/main/09_pandas.ipynb)

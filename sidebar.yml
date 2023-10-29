@@ -1,7 +1,7 @@
 website:
   sidebar:
     contents:
-      - 00_index.ipynb
+      - index.ipynb
       - 01_text_classification.ipynb
       - 08_numpy.ipynb
       - 09_pandas.ipynb
