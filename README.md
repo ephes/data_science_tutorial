@@ -24,7 +24,7 @@ and start your preferred notebook server.
 ``` sh
 $ git clone git@github.com:ephes/data_science_tutorial.git
 $ python -m venv venv
-$ venv/bin/python -m pip install jupterlab
+$ venv/bin/python -m pip install jupyterlab
 $ venv/bin/jupyter lab
 ```
 
