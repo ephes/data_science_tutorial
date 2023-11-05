@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://ephes.github.io/data_science_tutorial/pandas.html</loc>
+    <lastmod>2023-11-05T08:31:55.040Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ephes.github.io/data_science_tutorial/index.html</loc>
+    <lastmod>2023-11-05T08:31:53.184Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ephes.github.io/data_science_tutorial/text_classification.html</loc>
+    <lastmod>2023-11-05T08:31:52.240Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ephes.github.io/data_science_tutorial/numpy.html</loc>
+    <lastmod>2023-11-05T08:31:53.644Z</lastmod>
+  </url>
+</urlset>

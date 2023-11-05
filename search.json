@@ -1,0 +1,170 @@
+[
+  {
+    "objectID": "pandas.html",
+    "href": "pandas.html",
+    "title": "Pandas Tutorial",
+    "section": "",
+    "text": "import numpy as np\nimport pandas as pd\n\n\nimport matplotlib.pyplot as plt\n\npd.options.display.max_columns = 50"
+  },
+  {
+    "objectID": "pandas.html#method-chaining",
+    "href": "pandas.html#method-chaining",
+    "title": "Pandas Tutorial",
+    "section": "Method Chaining",
+    "text": "Method Chaining\n\ndf = (df.dropna()\n        .rename(columns=df.iloc[0]).drop(df.index[0])\n        .rename(columns=str.lower)\n        .reset_index()      \n        .rename(columns={\"city[a]\": \"name\", \"index\": \"rank\"})      \n        .assign(country=lambda x: pd.Categorical(x[\"country\"]),\n                name=lambda x: pd.Categorical(x[\"name\"]),\n                population_est=lambda x: x[\"un 2018 population estimates[b]\"].astype(np.int32),\n                definition=lambda x: pd.Categorical(x[\"definition\"]),\n                density=lambda x: x[\"density (/km2)\"].iloc[:, 0].str.replace(\",\", \"\").str.extract(r'(\\d+)').astype(np.float32),\n                rank=lambda x: x[\"rank\"] - 1\n        )\n)[[\"rank\", \"name\", \"country\", \"definition\", \"population_est\", \"density\"]]\n\n\ndf.info()\n\n&lt;class 'pandas.core.frame.DataFrame'&gt;\nRangeIndex: 81 entries, 0 to 80\nData columns (total 6 columns):\n #   Column          Non-Null Count  Dtype   \n---  ------          --------------  -----   \n 0   rank            81 non-null     int64   \n 1   name            81 non-null     category\n 2   country         81 non-null     category\n 3   definition      81 non-null     category\n 4   population_est  81 non-null     int32   \n 5   density         74 non-null     float32 \ndtypes: category(3), float32(1), int32(1), int64(1)\nmemory usage: 6.9 KB\n\n\n\ndf.head()\n\n\n\n\n\n\n\n\nrank\nname\ncountry\ndefinition\npopulation_est\ndensity\n\n\n\n\n0\n1\nTokyo\nJapan\nMetropolis prefecture\n37468000\n6169.0\n\n\n1\n2\nDelhi\nIndia\nMunicipal corporation\n28514000\n11289.0\n\n\n2\n3\nShanghai\nChina\nMunicipality\n25582000\n3922.0\n\n\n3\n4\nSão Paulo\nBrazil\nMunicipality\n21650000\n8055.0\n\n\n4\n5\nMexico City\nMexico\nCity-state\n21581000\n6202.0\n\n\n\n\n\n\n\n\ndf.sort_values(by=\"density\", ascending=False).head()\n\n\n\n\n\n\n\n\nrank\nname\ncountry\ndefinition\npopulation_est\ndensity\n\n\n\n\n16\n17\nManila\nPhilippines\nCapital city\n13482000\n41399.0\n\n\n8\n9\nDhaka\nBangladesh\nCapital city\n19578000\n26349.0\n\n\n15\n16\nKolkata\nIndia\nMunicipal corporation\n14681000\n21935.0\n\n\n6\n7\nMumbai\nIndia\nMunicipal corporation\n19980000\n20694.0\n\n\n27\n28\nParis\nFrance\nCommune\n10901000\n20460.0"
+  },
+  {
+    "objectID": "pandas.html#indices",
+    "href": "pandas.html#indices",
+    "title": "Pandas Tutorial",
+    "section": "Indices",
+    "text": "Indices\n\nSimple\n\nds = df.set_index(\"rank\")\n\n\nds.loc[2:5, \"country\": \"population_est\"].head()\n\n\n\n\n\n\n\n\ncountry\ndefinition\npopulation_est\n\n\nrank\n\n\n\n\n\n\n\n2\nIndia\nMunicipal corporation\n28514000\n\n\n3\nChina\nMunicipality\n25582000\n\n\n4\nBrazil\nMunicipality\n21650000\n\n\n5\nMexico\nCity-state\n21581000\n\n\n\n\n\n\n\n\nds.loc[ds.name.isin((\"Paris\", \"Dhaka\")), \"country\": \"population_est\"].head()\n\n\n\n\n\n\n\n\ncountry\ndefinition\npopulation_est\n\n\nrank\n\n\n\n\n\n\n\n9\nBangladesh\nCapital city\n19578000\n\n\n28\nFrance\nCommune\n10901000\n\n\n\n\n\n\n\n\n\nMultidimensional\n\ndf.head()\n\n\n\n\n\n\n\n\nrank\nname\ncountry\ndefinition\npopulation_est\ndensity\n\n\n\n\n0\n1\nTokyo\nJapan\nMetropolis prefecture\n37468000\n6169.0\n\n\n1\n2\nDelhi\nIndia\nMunicipal corporation\n28514000\n11289.0\n\n\n2\n3\nShanghai\nChina\nMunicipality\n25582000\n3922.0\n\n\n3\n4\nSão Paulo\nBrazil\nMunicipality\n21650000\n8055.0\n\n\n4\n5\nMexico City\nMexico\nCity-state\n21581000\n6202.0\n\n\n\n\n\n\n\n\nds = df.set_index([\"country\", \"definition\", \"rank\"]).sort_index()\n\n\nds.loc[\"China\",:,:]\n\n\n\n\n\n\n\n\n\nname\npopulation_est\ndensity\n\n\ndefinition\nrank\n\n\n\n\n\n\n\nCity (sub-provincial)\n22\nGuangzhou\n12638000\n1950.0\n\n\n25\nShenzhen\n11908000\n6111.0\n\n\n40\nChengdu\n8813000\n1116.0\n\n\n41\nNanjing\n8245000\n1103.0\n\n\n42\nWuhan\n8176000\n1282.0\n\n\n47\nXi'an\n7444000\n887.0\n\n\n50\nHangzhou\n7236000\n570.0\n\n\n52\nShenyang\n6921000\n639.0\n\n\n60\nHarbin\n6115000\n200.0\n\n\n75\nQingdao\n5381000\nNaN\n\n\n76\nDalian\n5300000\nNaN\n\n\n80\nJinan\n5052000\n849.0\n\n\nMunicipality\n3\nShanghai\n25582000\n3922.0\n\n\n8\nBeijing\n19618000\n1334.0\n\n\n14\nChongqing\n14838000\n389.0\n\n\n20\nTianjin\n13215000\n1163.0\n\n\nPrefecture-level city\n49\nDongguan\n7360000\n3384.0\n\n\n51\nFoshan\n7236000\n1870.0\n\n\n58\nSuzhou\n6339000\n1263.0\n\n\nSpecial administrative region\n48\nHong Kong\n7429000\n6611.0"
+  },
+  {
+    "objectID": "pandas.html#simple-plots",
+    "href": "pandas.html#simple-plots",
+    "title": "Pandas Tutorial",
+    "section": "Simple Plots",
+    "text": "Simple Plots\n\nsize = (10, 5)\n\n\nax = df.density.hist(figsize=size)\n\n\n\n\n\nax = df.plot(x=\"name\", y=\"population_est\", figsize=size)\n\n\n\n\n\nax = df.plot.scatter(x=\"density\", y=\"population_est\", figsize=size)"
+  },
+  {
+    "objectID": "pandas.html#grouping",
+    "href": "pandas.html#grouping",
+    "title": "Pandas Tutorial",
+    "section": "Grouping",
+    "text": "Grouping\n\ndt = (df[[\"country\", \"population_est\", \"name\"]]\n      .groupby(\"country\", observed=False)\n      .agg({\"population_est\": \"sum\", \"name\": \"count\"})\n      .rename(columns={\"name\": \"cities\"})\n      .reset_index()\n      .sort_values(by=\"cities\", ascending=False)\n      .head(12))\ndt\n\n\n\n\n\n\n\n\ncountry\npopulation_est\ncities\n\n\n\n\n6\nChina\n194846000\n20\n\n\n34\nUnited States\n74865000\n9\n\n\n11\nIndia\n115074000\n9\n\n\n15\nJapan\n71807000\n4\n\n\n3\nBrazil\n40915000\n3\n\n\n20\nPakistan\n27138000\n2\n\n\n23\nRussia\n17793000\n2\n\n\n17\nMexico\n26604000\n2\n\n\n9\nEgypt\n25162000\n2\n\n\n28\nSpain\n11991000\n2\n\n\n26\nSouth Africa\n5486000\n1\n\n\n24\nSaudi Arabia\n6907000\n1"
+  },
+  {
+    "objectID": "pandas.html#how-often-do-which-values-occur-in-a-column",
+    "href": "pandas.html#how-often-do-which-values-occur-in-a-column",
+    "title": "Pandas Tutorial",
+    "section": "How often do which values occur in a column?",
+    "text": "How often do which values occur in a column?\n\ndt.cities.value_counts()\n\ncities\n2     5\n9     2\n1     2\n20    1\n4     1\n3     1\nName: count, dtype: int64"
+  },
+  {
+    "objectID": "pandas.html#fetch-the-inhabitants-per-country",
+    "href": "pandas.html#fetch-the-inhabitants-per-country",
+    "title": "Pandas Tutorial",
+    "section": "Fetch the inhabitants per country",
+    "text": "Fetch the inhabitants per country\n\ncountries_url = \"https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population\"\ntables = pd.read_html(countries_url, header=0, flavor=\"bs4\", decimal=\",\", thousands=\".\")\n\n\ndc = tables[0]\n\n\n\"1,34.5\".replace(\",.\", \"\")\n\n'1,34.5'\n\n\n\ndc = (dc.rename(columns=str.lower)\n   .assign(\n       population=lambda x: x[\"population\"].str.replace(r\"[.,]\", \"\", regex=True).astype(np.int64),\n       country=lambda x: pd.Categorical(x[\"country / dependency\"])\n   )\n)[[\"country\", \"population\"]]\n\n\ndc.head()\n\n\n\n\n\n\n\n\ncountry\npopulation\n\n\n\n\n0\nWorld\n8068346000\n\n\n1\nChina\n1411750000\n\n\n2\nIndia\n1392329000\n\n\n3\nUnited States\n335576000\n\n\n4\nIndonesia\n279118866\n\n\n\n\n\n\n\n\nquery\n\ndc.query(\"population &gt; 10**6 and country in ('Niger', 'United States', 'India')\")\n\n\n\n\n\n\n\n\ncountry\npopulation\n\n\n\n\n2\nIndia\n1392329000\n\n\n3\nUnited States\n335576000\n\n\n56\nNiger\n25369415\n\n\n\n\n\n\n\n\ndt\n\n\n\n\n\n\n\n\ncountry\npopulation_est\ncities\n\n\n\n\n6\nChina\n194846000\n20\n\n\n34\nUnited States\n74865000\n9\n\n\n11\nIndia\n115074000\n9\n\n\n15\nJapan\n71807000\n4\n\n\n3\nBrazil\n40915000\n3\n\n\n20\nPakistan\n27138000\n2\n\n\n23\nRussia\n17793000\n2\n\n\n17\nMexico\n26604000\n2\n\n\n9\nEgypt\n25162000\n2\n\n\n28\nSpain\n11991000\n2\n\n\n26\nSouth Africa\n5486000\n1\n\n\n24\nSaudi Arabia\n6907000\n1"
+  },
+  {
+    "objectID": "pandas.html#join---like-in-sql",
+    "href": "pandas.html#join---like-in-sql",
+    "title": "Pandas Tutorial",
+    "section": "Join - like in SQL",
+    "text": "Join - like in SQL\n\ndm = (pd.merge(dt, dc, on=\"country\")[[\"country\", \"cities\", \"population_est\", \"population\"]]\n        .rename(columns={\"population_est\": \"in_cities\", \"population\": \"total\"}))\ndm\n\n\n\n\n\n\n\n\ncountry\ncities\nin_cities\ntotal\n\n\n\n\n0\nChina\n20\n194846000\n1411750000\n\n\n1\nUnited States\n9\n74865000\n335576000\n\n\n2\nIndia\n9\n115074000\n1392329000\n\n\n3\nJapan\n4\n71807000\n124340000\n\n\n4\nBrazil\n3\n40915000\n203062512\n\n\n5\nPakistan\n2\n27138000\n241499431\n\n\n6\nRussia\n2\n17793000\n146424729\n\n\n7\nMexico\n2\n26604000\n129202482\n\n\n8\nEgypt\n2\n25162000\n105481000\n\n\n9\nSpain\n2\n11991000\n48345223\n\n\n10\nSouth Africa\n1\n5486000\n62027503\n\n\n11\nSaudi Arabia\n1\n6907000\n32175224\n\n\n\n\n\n\n\n\ndm[\"city_ratio\"] = dm.in_cities / dm.total\n\n\ndm\n\n\n\n\n\n\n\n\ncountry\ncities\nin_cities\ntotal\ncity_ratio\n\n\n\n\n0\nChina\n20\n194846000\n1411750000\n0.138017\n\n\n1\nUnited States\n9\n74865000\n335576000\n0.223094\n\n\n2\nIndia\n9\n115074000\n1392329000\n0.082649\n\n\n3\nJapan\n4\n71807000\n124340000\n0.577505\n\n\n4\nBrazil\n3\n40915000\n203062512\n0.201490\n\n\n5\nPakistan\n2\n27138000\n241499431\n0.112373\n\n\n6\nRussia\n2\n17793000\n146424729\n0.121516\n\n\n7\nMexico\n2\n26604000\n129202482\n0.205909\n\n\n8\nEgypt\n2\n25162000\n105481000\n0.238545\n\n\n9\nSpain\n2\n11991000\n48345223\n0.248029\n\n\n10\nSouth Africa\n1\n5486000\n62027503\n0.088445\n\n\n11\nSaudi Arabia\n1\n6907000\n32175224\n0.214668"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Data Science Tutorial",
+    "section": "",
+    "text": "Cover image for a Data Science / Machine Learning Course or Meetup\nThis tutorial covers topics that are relevant or interesting for me for some kind of reason 😄. Have fun!"
+  },
+  {
+    "objectID": "index.html#numpy",
+    "href": "index.html#numpy",
+    "title": "Data Science Tutorial",
+    "section": "Numpy",
+    "text": "Numpy\nNumpy is the basis of a lot of stuff in related to data science in Python.\nChapter 08: Numpy Overview Covering the Basic Features docs\n\nLocal: Notebook\nGoogle Colab: Open in Colab"
+  },
+  {
+    "objectID": "index.html#pandas",
+    "href": "index.html#pandas",
+    "title": "Data Science Tutorial",
+    "section": "Pandas",
+    "text": "Pandas\nPandas is very useful for all kinds of pre-processing and data cleaning.\nChapter 09: Using Pandas docs\n\nLocal: Notebook\nGoogle Colab: Open in Colab"
+  },
+  {
+    "objectID": "text_classification.html",
+    "href": "text_classification.html",
+    "title": "Text Classification (Reuters-21578)",
+    "section": "",
+    "text": "import numpy as np\nimport pandas as pd\n\nimport pickle\n\nfrom pathlib import Path\n\nimport seaborn as sns\nsns.set_style(\"whitegrid\")\n\nimport matplotlib.pyplot as plt"
+  },
+  {
+    "objectID": "text_classification.html#prepare-dataset",
+    "href": "text_classification.html#prepare-dataset",
+    "title": "Text Classification (Reuters-21578)",
+    "section": "Prepare Dataset",
+    "text": "Prepare Dataset\n\nDownload\n\nfrom ds_tut import download_from_url\n\narchive_name = \"reuters21578.tar.gz\"\ntraining_data_url = \"http://www.daviddlewis.com/resources/testcollections/reuters21578/{}\".format(archive_name)\ndata_root = Path.cwd() / \"data\" / \"tmp\"\ndata_root.mkdir(parents=True, exist_ok=True)\ntraining_data_path = data_root / archive_name\nreuters_dir = data_root / archive_name.split(\".\")[0]\ndata_size = download_from_url(training_data_url, training_data_path)\n\n\n\nUnpack\n\nimport tarfile\n\ntar = tarfile.open(str(training_data_path))\ntar.extractall(path=str(reuters_dir))\ntar.close()\n\n\n\nParse\n\nimport pickle\n\nfrom ds_tut.datasets import ReutersParser, ReutersCorpus\n\ndocuments = []\nrp = ReutersParser()\nfor sgml_path in reuters_dir.glob(\"*.sgm\"):\n    for doc in rp.parse_sgml(str(sgml_path)):\n        doc[\"filename\"] = sgml_path\n        documents.append(doc)\n\npickle_path = reuters_dir / \"documents.pkl\"\nwith open(str(pickle_path), \"wb\") as f:\n    pickle.dump(documents, f)\n\nreuters = ReutersCorpus(documents)\n\npickle_path = reuters_dir / \"corpus.pkl\"\nwith open(str(pickle_path), \"wb\") as f:\n    pickle.dump(reuters, f)"
+  },
+  {
+    "objectID": "text_classification.html#explore-reuters-21578",
+    "href": "text_classification.html#explore-reuters-21578",
+    "title": "Text Classification (Reuters-21578)",
+    "section": "Explore Reuters-21578",
+    "text": "Explore Reuters-21578\n\nLoad dataset\n\nfrom ds_tut.datasets import ReutersCorpus\n\ndata_root = Path.cwd() / \"data\" / \"tmp\"\nreuters_documents_path = data_root / \"reuters21578\" / \"documents.pkl\"\nreuters_corpus_path = data_root / \"reuters21578\" / \"corpus.pkl\"\n\ndocuments = pickle.load(open(reuters_documents_path, \"rb\"))\nreuters = pickle.load(open(reuters_corpus_path, \"rb\"))\ndf, top_ten_ids, train_labels, test_labels = reuters.build_dataframe(pd=pd)\ntrain, test = reuters.split_modapte()"
+  },
+  {
+    "objectID": "text_classification.html#get-some-simple-stats",
+    "href": "text_classification.html#get-some-simple-stats",
+    "title": "Text Classification (Reuters-21578)",
+    "section": "Get some simple stats",
+    "text": "Get some simple stats\n\nnumber_of_samples = reuters.number_of_samples\nnumber_of_classes = reuters.number_of_classes\nnumber_of_samples_per_class = int(np.average([tc for tc in reuters.topic_counts.values() if tc &gt; 1]))\nnumber_of_words_per_sample = int(np.median([len(d[\"text\"].split()) for d in reuters.docs]))\nsamples_to_words_per_sample_ratio = int(number_of_samples / number_of_words_per_sample)\n\n\nnchars = 52\nprint(\"Number of samples:\".ljust(nchars), reuters.number_of_samples)\nprint(\"Number of classes:\".ljust(nchars), reuters.number_of_classes)\nprint(\"Number of samples per class:\".ljust(nchars), number_of_samples_per_class)\nprint(\"Number of words per sample:\".ljust(nchars), number_of_words_per_sample)\nprint(\"Number of samples/number of words per sample ratio:\".ljust(nchars), samples_to_words_per_sample_ratio)\n\nNumber of samples:                                   10789\nNumber of classes:                                   119\nNumber of samples per class:                         148\nNumber of words per sample:                          89\nNumber of samples/number of words per sample ratio:  121"
+  },
+  {
+    "objectID": "text_classification.html#distribution-of-sample-length-for-reuters21578",
+    "href": "text_classification.html#distribution-of-sample-length-for-reuters21578",
+    "title": "Text Classification (Reuters-21578)",
+    "section": "Distribution of sample length for reuters21578",
+    "text": "Distribution of sample length for reuters21578\n\nfig, ax = plt.subplots(figsize=(15, 10))\nsns.histplot([len(d[\"text\"]) for d in reuters.docs], kde=True, ax=ax)\nax.set_title('Sample length distribution')\nax.set_xlabel('Length of a sample')\nax.set_xlim(0, 8000)\n_ = ax.set_ylabel('Number of samples')"
+  },
+  {
+    "objectID": "text_classification.html#word-frequency-distribution",
+    "href": "text_classification.html#word-frequency-distribution",
+    "title": "Text Classification (Reuters-21578)",
+    "section": "Word frequency distribution",
+    "text": "Word frequency distribution\n\nfrom sklearn.feature_extraction.text import CountVectorizer\n\nkwargs = {\n        'ngram_range': (1, 1),\n        'dtype': 'int32',\n        'strip_accents': 'unicode',\n        'decode_error': 'replace',\n        'analyzer': 'word',  # Split text into word tokens.\n}\nvectorizer = CountVectorizer(**kwargs)\nvectorized_texts = vectorizer.fit_transform(reuters.texts)\nall_ngrams = list(vectorizer.get_feature_names_out())\nall_counts = vectorized_texts.sum(axis=0).tolist()[0]\nall_counts, all_ngrams = zip(*[(c, n) for c, n in sorted(\n    zip(all_counts, all_ngrams), reverse=True)])\n\nnum_ngrams=50\nngrams = list(all_ngrams)[:num_ngrams]\ncounts = list(all_counts)[:num_ngrams]\nidx = np.arange(num_ngrams)\n\n\nfig, ax = plt.subplots(figsize=(15, 10))\nsns.barplot(x=ngrams, y=counts, ax=ax, color=\"#95BCD9\")\nax.set_title('Sample length distribution')\nplt.xlabel('N-grams')\n_ = plt.ylabel('Frequencies')\n_ = plt.title('Frequency distribution of n-grams')\n_ = plt.xticks(idx, ngrams, rotation=45)"
+  },
+  {
+    "objectID": "text_classification.html#choose-a-model-flowchart",
+    "href": "text_classification.html#choose-a-model-flowchart",
+    "title": "Text Classification (Reuters-21578)",
+    "section": "Choose a model flowchart",
+    "text": "Choose a model flowchart\n\nfrom IPython.display import display, HTML\nurl = \"https://developers.google.com/machine-learning/guides/text-classification/images/TextClassificationFlowchart.png\"\nhtml_code = f\"\"\"\n&lt;div&gt;\n    &lt;p&gt;Number of samples/number of words per sample ratio: {samples_to_words_per_sample_ratio}&lt;/p&gt;\n    &lt;img src=\"{url}\" style=\"width: 100%\"&gt;\n&lt;/div&gt;\n\"\"\"\ndisplay(HTML(html_code))\n\n\n\n    Number of samples/number of words per sample ratio: 121"
+  },
+  {
+    "objectID": "text_classification.html#simple-linear-model",
+    "href": "text_classification.html#simple-linear-model",
+    "title": "Text Classification (Reuters-21578)",
+    "section": "Simple Linear Model",
+    "text": "Simple Linear Model\nOk, pretty impressive image. How about to try just a very simple linear model?\n\nGet text and labels\n\nfrom sklearn.preprocessing import MultiLabelBinarizer\n\ntrain_docs, test_docs = reuters.split_modapte()\nprint(len(train_docs), len(test_docs))\n\ntrain = [d[\"text\"] for d in train_docs]\ntrain_labels = reuters.get_labels(train_docs)\ny_train = MultiLabelBinarizer().fit_transform(train_labels)\n\ntest = [d[\"text\"] for d in test_docs]\ntest_labels = reuters.get_labels(test_docs)\ny_test = MultiLabelBinarizer().fit_transform(test_labels)\n\n7770 3019\n\n\n\n\nVectorize Texts\n\nfrom sklearn.feature_extraction.text import TfidfVectorizer\n\nvectorizer = TfidfVectorizer()\nvectorizer.fit(train)\n\nX_train = vectorizer.transform(train)\nX_test = vectorizer.transform(test)\n\n\n\nEvaluate Models\n\nfrom sklearn.metrics import classification_report\nfrom sklearn.multiclass import OneVsRestClassifier\n\ntop_ten_ids, top_ten_names = reuters.top_n(n=10)\n\n\nLogistic Regression\nThis is usually one of the first models to try. Simple, robust, fast, elegant. One of the best baseline methods.\n\nfrom sklearn.linear_model import LogisticRegression\n# model = OneVsRestClassifier(LogisticRegression(C=100, solver=\"liblinear\", multi_class=\"ovr\"))\nmodel = OneVsRestClassifier(LogisticRegression(solver=\"liblinear\", multi_class=\"ovr\"))\nmodel.fit(X_train, y_train)\ny_pred = model.predict(X_test)\nprint(classification_report(y_test, y_pred, target_names=top_ten_names, labels=top_ten_ids, zero_division=0.0))\n\n              precision    recall  f1-score   support\n\n        earn       0.99      0.97      0.98      1087\n         acq       0.98      0.92      0.95       719\n    money-fx       0.78      0.51      0.62       179\n       grain       0.99      0.60      0.75       149\n       crude       0.96      0.57      0.72       189\n       trade       0.93      0.54      0.68       117\n    interest       0.91      0.47      0.62       131\n        ship       1.00      0.13      0.24        89\n       wheat       0.97      0.51      0.67        71\n        corn       0.95      0.32      0.48        56\n\n   micro avg       0.97      0.79      0.87      2787\n   macro avg       0.95      0.56      0.67      2787\nweighted avg       0.97      0.79      0.85      2787\n samples avg       0.70      0.69      0.69      2787\n\n\n\n\n\nLinear Support Vector Machine\n\nfrom sklearn.svm import LinearSVC\nmodel = OneVsRestClassifier(LinearSVC(dual=True))\nmodel.fit(X_train, y_train)\ny_pred = model.predict(X_test)\nprint(classification_report(y_test, y_pred, target_names=top_ten_names, labels=top_ten_ids, digits=3, zero_division=0.0))\n\n              precision    recall  f1-score   support\n\n        earn      0.991     0.980     0.985      1087\n         acq      0.984     0.950     0.967       719\n    money-fx      0.810     0.788     0.799       179\n       grain      0.975     0.799     0.878       149\n       crude      0.906     0.868     0.886       189\n       trade      0.830     0.709     0.765       117\n    interest      0.870     0.664     0.753       131\n        ship      0.924     0.685     0.787        89\n       wheat      0.929     0.732     0.819        71\n        corn      0.955     0.750     0.840        56\n\n   micro avg      0.956     0.896     0.925      2787\n   macro avg      0.917     0.793     0.848      2787\nweighted avg      0.954     0.896     0.922      2787\n samples avg      0.771     0.769     0.767      2787\n\n\n\n\n\n\nPrecision/Recall-Curve\nOne way to visualize the performance of a classifier.\n\ndf_train = df.query(\"modapte == 'train'\")\ndf_test = df.query(\"modapte == 'test'\")\n\nmlb = MultiLabelBinarizer()\ny_train = mlb.fit_transform(df_train.label)\ny_test = mlb.transform(df_test.label)\nprint(df_train.shape, df_test.shape)\n\ncache_dir = reuters_dir / \"cache\"\n\n(7770, 9) (3019, 9)\n\n\n\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.pipeline import FeatureUnion\n\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.base import BaseEstimator, TransformerMixin\n\n\nclass EmptyFitMixin:\n    def fit(self, x, y=None):\n        return self\n\n\nclass TextStats(BaseEstimator, EmptyFitMixin, TransformerMixin):\n    \"\"\"Extract features from each document\"\"\"\n\n    def transform(self, col):\n        tc = col.str\n        features = [\n            tc.len(),  # character count\n            tc.count(r\"\\n\"),  # line count\n            tc.count(r\"\\.\"),  # sentence count\n            tc.split().apply(lambda x: len(x) if x is not None else 0),  # word count\n        ]\n        features = np.concatenate([f.values.reshape(-1, 1) for f in features], axis=1)\n        where_are_NaNs = np.isnan(features)\n        features[where_are_NaNs] = 0\n        return features.astype(np.float64)\n\n\nclass TextFromPandasColumns(EmptyFitMixin, BaseEstimator, TransformerMixin):\n    \"\"\"Extract the text from a list of columns in a single pass.\n\n    Takes a pandas dataframe and produces a series of texts\n    from joined columns defined in `text_cols`.\n    \"\"\"\n    text_cols = [\"title\", \"body\"]\n\n    def transform(self, df):\n        def join(items, axis=None):\n            return \" \".join([str(item) for item in items])\n\n        data = df[self.text_cols].apply(lambda x: \"\" if x.iloc[0] is None else x, axis=1)\n        texts = data.apply(join, axis=1)\n        return texts\n\n\nclass ColumnSelector(EmptyFitMixin, BaseEstimator, TransformerMixin):\n    def __init__(self, column, filter_none=True):\n        self.column = column\n        self.filter_none = filter_none\n\n    def transform(self, df):\n        col = df[self.column]\n        if self.filter_none:\n            col = col.apply(lambda x: \"\" if x is None else x)\n        return col\n\n\npipeline = Pipeline(\n    memory=str(cache_dir),\n    steps=[\n        (\"union\", FeatureUnion(n_jobs=1, transformer_list=[\n            (\"title_stats\", Pipeline([\n                (\"column\", ColumnSelector(\"title\")),\n                (\"stats\", TextStats()),\n                (\"scaled\", StandardScaler()),\n            ])),\n            (\"body_stats\", Pipeline([\n                (\"column\", ColumnSelector(\"body\")),\n                (\"stats\", TextStats()),\n                (\"scaled\", StandardScaler()),\n            ])),\n            (\"combined_text\", Pipeline([\n                (\"column\", TextFromPandasColumns()),\n                (\"tfidf\", TfidfVectorizer()),\n            ])),\n        ])),\n        (\"clf\", OneVsRestClassifier(LinearSVC(C=1, dual=True, max_iter=20000))),\n])\n\n\npipeline.fit(df_train, y_train)\ny_pred = pipeline.predict(df_test)\nprint(classification_report(y_test, y_pred, target_names=top_ten_names, labels=top_ten_ids, digits=3, zero_division=0.0))\n\n\ny_score = pipeline.decision_function(df_test)\n\nfrom sklearn.preprocessing import label_binarize\n\ny_test_bin = label_binarize(y_test, classes=list(range(y_score.shape[1])))\n\n\nfrom sklearn.metrics import precision_recall_curve\nfrom sklearn.metrics import average_precision_score\n\n# For each class\nprecision, recall, average_precision = {}, {}, {}\nfor i in range(y_score.shape[1]):\n    precision[i], recall[i], _ = precision_recall_curve(y_test_bin[:, i], y_score[:, i])\n    average_precision[i] = average_precision_score(y_test_bin[:, i], y_score[:, i])\n\n# A \"micro-average\": quantifying score on all classes jointly\nprecision[\"micro\"], recall[\"micro\"], _ = precision_recall_curve(y_test_bin.ravel(), y_score.ravel())\naverage_precision[\"micro\"] = average_precision_score(y_test_bin, y_score, average=\"micro\")\nprint('Average precision score, micro-averaged over all classes: {0:0.2f}'\n      .format(average_precision[\"micro\"]))\n\n\n# precision recall breakeven point\nprbp = None\nfor num, (p, r) in enumerate(zip(precision[\"micro\"], recall[\"micro\"])):\n    if p == r:\n        print(num, p, r)\n        prbp = p\n\n\nplt.figure(figsize=(15, 10))\nplt.step(recall['micro'], precision['micro'], color='b', alpha=0.2,\n         where='post')\nplt.fill_between(recall[\"micro\"], precision[\"micro\"], step='post', alpha=0.2,\n                 color='b')\n\nplt.xlabel('Recall')\nplt.ylabel('Precision')\nplt.ylim([0.0, 1.05])\nplt.xlim([0.0, 1.0])\nplt.title(\n    'Average precision score, micro-averaged over all classes: AP={0:0.2f}'\n    .format(average_precision[\"micro\"]))"
+  },
+  {
+    "objectID": "numpy.html",
+    "href": "numpy.html",
+    "title": "Numpy Tutorial",
+    "section": "",
+    "text": "# Install dependencies\n\n\nimport ds_tut\nds_tut.setup()\n\nNote: you may need to restart the kernel to use updated packages.\nimport numpy as np"
+  },
+  {
+    "objectID": "numpy.html#help",
+    "href": "numpy.html#help",
+    "title": "Numpy Tutorial",
+    "section": "? / help / ??",
+    "text": "? / help / ??\n\nJust append a ? to an item to see the docstring or call help(item)\nAppend ?? to view the source\n\n\n#np.array?\n\n\n#help(np.array)\n\n\n#np.abs??"
+  },
+  {
+    "objectID": "numpy.html#how-to-find-functions",
+    "href": "numpy.html#how-to-find-functions",
+    "title": "Numpy Tutorial",
+    "section": "How to find Functions",
+    "text": "How to find Functions\n\n#np.lookfor('diagonal')"
+  },
+  {
+    "objectID": "numpy.html#arrays-vs-lists",
+    "href": "numpy.html#arrays-vs-lists",
+    "title": "Numpy Tutorial",
+    "section": "Arrays vs Lists",
+    "text": "Arrays vs Lists\n\nfrom math import sqrt\nlong_list = list(range(n))\n\n39.7 ms ± 668 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)\n\n\n\nlong_array = np.arange(n)\n\n879 µs ± 38.6 µs per loop (mean ± std. dev. of 7 runs, 1,000 loops each)"
+  },
+  {
+    "objectID": "numpy.html#loops-are-bad",
+    "href": "numpy.html#loops-are-bad",
+    "title": "Numpy Tutorial",
+    "section": "Loops are Bad",
+    "text": "Loops are Bad\n\nx = 27\n\n\ncount = 0\nfor i in range(1000000):\n    if i % x == 0:\n        count += 1\n\nUsageError: Line magic function `%%timeit` not found.\n\n\n\na = np.arange(n)\n\n\ncount = 0\nfor i in a:\n    if i % x == 0:\n        count += 1"
+  }
+]
